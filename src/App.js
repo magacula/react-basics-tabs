@@ -9,8 +9,32 @@ function App() {
   const [jobs, setJobs] = useState([]);
   const [value, setValue] = useState(0);
 
+  const fetchJobs = async () => {
+    const response = await fetch(url);
+    const newJobs = await response.json();
 
-  return <h2>Tabs Project Setup</h2>;
+    setJobs(newJobs);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchJobs();
+    // return () => {
+    //   cleanup
+    // }
+  }, [])
+
+  if(loading) {
+    return (
+      <section className="section loading">
+        <h1>Loading...</h1>;
+      </section>
+    );
+  }
+
+  return <h2>Jobs</h2>;
+
+  
 }
 
 export default App;
